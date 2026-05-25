@@ -75,7 +75,7 @@ ros2 launch cosmo_rover drive_rover.launch.py
 Option directe, depuis le dossier `ros2_ws` :
 
 ```bash
-gz sim src/cosmo_rover/worlds/simple_track.sdf
+GZ_SIM_RESOURCE_PATH=$PWD/src/cosmo_rover/models gz sim src/cosmo_rover/worlds/simple_track.sdf
 ```
 
 Le monde contient un sol plat, une piste rectangulaire simple, une ligne de depart visible et le rover place pres de cette ligne.

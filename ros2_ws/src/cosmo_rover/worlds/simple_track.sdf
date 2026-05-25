@@ -109,7 +109,7 @@
     <!-- Spawn the simple rover just after the red start line. -->
     <include>
       <name>cosmo_rover</name>
-      <uri>../models/cosmo_rover</uri>
+      <uri>model://cosmo_rover</uri>
       <pose>-3.4 0 0.03 0 0 0</pose>
     </include>
   </world>
