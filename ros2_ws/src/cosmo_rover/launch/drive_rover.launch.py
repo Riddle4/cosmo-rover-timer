@@ -4,6 +4,7 @@ from os.path import join
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import ExecuteProcess, SetEnvironmentVariable
+from launch_ros.actions import Node
 
 
 def generate_launch_description():
@@ -22,7 +23,13 @@ def generate_launch_description():
         [
             SetEnvironmentVariable("GZ_SIM_RESOURCE_PATH", resource_path),
             ExecuteProcess(
-                cmd=["gz", "sim", world_path],
+                cmd=["gz", "sim", "-r", world_path],
+                output="screen",
+            ),
+            Node(
+                package="ros_gz_bridge",
+                executable="parameter_bridge",
+                arguments=["/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist"],
                 output="screen",
             )
         ]

@@ -28,6 +28,7 @@ setup(
     tests_require=["pytest"],
     entry_points={
         "console_scripts": [
+            "drive_node = cosmo_rover.drive_node:main",
             "timer_node = cosmo_rover.timer_node:main",
         ],
     },
