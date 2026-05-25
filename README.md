@@ -108,10 +108,10 @@ Le node de conduite lit les touches du clavier et publie sur `/cmd_vel`.
 Commandes clavier :
 
 ```text
-fleche haut    : avancer
-fleche bas     : reculer
-fleche gauche  : tourner a gauche
-fleche droite  : tourner a droite
+e              : avancer
+d              : reculer
+s              : tourner a gauche
+f              : tourner a droite
 q              : augmenter la vitesse
 a              : diminuer la vitesse
 espace         : stopper

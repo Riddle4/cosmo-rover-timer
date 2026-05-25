@@ -30,10 +30,10 @@ class DriveNode(Node):
         print("")
         print("Cosmo Rover keyboard controls")
         print("-----------------------------")
-        print("Up arrow    : forward")
-        print("Down arrow  : backward")
-        print("Left arrow  : turn left")
-        print("Right arrow : turn right")
+        print("e           : forward")
+        print("d           : backward")
+        print("s           : turn left")
+        print("f           : turn right")
         print("q           : increase speed")
         print("a           : decrease speed")
         print("space       : stop")
@@ -59,16 +59,16 @@ class DriveNode(Node):
         self.get_logger().info(f"Linear speed: {self.linear_speed:.2f} m/s")
 
     def handle_key(self, key):
-        if key in ("\x1b[A", "\x1bOA"):
+        if key == "e":
             self.publish_command(linear_x=self.linear_speed)
             self.get_logger().info("Forward")
-        elif key in ("\x1b[B", "\x1bOB"):
+        elif key == "d":
             self.publish_command(linear_x=-self.linear_speed)
             self.get_logger().info("Backward")
-        elif key in ("\x1b[D", "\x1bOD"):
+        elif key == "s":
             self.publish_command(angular_z=self.angular_speed)
             self.get_logger().info("Turn left")
-        elif key in ("\x1b[C", "\x1bOC"):
+        elif key == "f":
             self.publish_command(angular_z=-self.angular_speed)
             self.get_logger().info("Turn right")
         elif key == "q":
@@ -81,18 +81,11 @@ class DriveNode(Node):
 
 
 def read_key():
-    """Read one key press, including arrow escape sequences."""
+    """Read one key press."""
     if not select.select([sys.stdin], [], [], 0.1)[0]:
         return None
 
-    key = sys.stdin.read(1)
-    if key == "\x1b":
-        # Arrow keys arrive as a short escape sequence, for example ESC [ A.
-        # Read the remaining bytes one by one so slower terminals still work.
-        for _ in range(2):
-            if select.select([sys.stdin], [], [], 0.1)[0]:
-                key += sys.stdin.read(1)
-    return key
+    return sys.stdin.read(1)
 
 
 def main(args=None):
