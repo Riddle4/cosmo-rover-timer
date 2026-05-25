@@ -59,16 +59,16 @@ class DriveNode(Node):
         self.get_logger().info(f"Linear speed: {self.linear_speed:.2f} m/s")
 
     def handle_key(self, key):
-        if key == "\x1b[A":
+        if key in ("\x1b[A", "\x1bOA"):
             self.publish_command(linear_x=self.linear_speed)
             self.get_logger().info("Forward")
-        elif key == "\x1b[B":
+        elif key in ("\x1b[B", "\x1bOB"):
             self.publish_command(linear_x=-self.linear_speed)
             self.get_logger().info("Backward")
-        elif key == "\x1b[D":
+        elif key in ("\x1b[D", "\x1bOD"):
             self.publish_command(angular_z=self.angular_speed)
             self.get_logger().info("Turn left")
-        elif key == "\x1b[C":
+        elif key in ("\x1b[C", "\x1bOC"):
             self.publish_command(angular_z=-self.angular_speed)
             self.get_logger().info("Turn right")
         elif key == "q":
@@ -86,8 +86,12 @@ def read_key():
         return None
 
     key = sys.stdin.read(1)
-    if key == "\x1b" and select.select([sys.stdin], [], [], 0.01)[0]:
-        key += sys.stdin.read(2)
+    if key == "\x1b":
+        # Arrow keys arrive as a short escape sequence, for example ESC [ A.
+        # Read the remaining bytes one by one so slower terminals still work.
+        for _ in range(2):
+            if select.select([sys.stdin], [], [], 0.1)[0]:
+                key += sys.stdin.read(1)
     return key
 
 
@@ -97,7 +101,7 @@ def main(args=None):
     terminal_settings = termios.tcgetattr(sys.stdin)
 
     try:
-        tty.setcbreak(sys.stdin.fileno())
+        tty.setraw(sys.stdin.fileno())
 
         while rclpy.ok():
             rclpy.spin_once(node, timeout_sec=0.0)
