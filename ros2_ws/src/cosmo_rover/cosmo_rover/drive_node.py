@@ -24,6 +24,7 @@ class DriveNode(Node):
 
         self.get_logger().info("Cosmo Rover keyboard drive ready")
         self.print_help()
+        self.timer = self.create_timer(0.1, self.publish_last_command)
 
     def print_help(self):
         print("")
@@ -46,6 +47,9 @@ class DriveNode(Node):
         self.last_command = message
         self.publisher.publish(message)
 
+    def publish_last_command(self):
+        self.publisher.publish(self.last_command)
+
     def increase_speed(self):
         self.linear_speed = min(self.max_speed, self.linear_speed + self.speed_step)
         self.get_logger().info(f"Linear speed: {self.linear_speed:.2f} m/s")
@@ -57,18 +61,23 @@ class DriveNode(Node):
     def handle_key(self, key):
         if key == "\x1b[A":
             self.publish_command(linear_x=self.linear_speed)
+            self.get_logger().info("Forward")
         elif key == "\x1b[B":
             self.publish_command(linear_x=-self.linear_speed)
+            self.get_logger().info("Backward")
         elif key == "\x1b[D":
             self.publish_command(angular_z=self.angular_speed)
+            self.get_logger().info("Turn left")
         elif key == "\x1b[C":
             self.publish_command(angular_z=-self.angular_speed)
+            self.get_logger().info("Turn right")
         elif key == "q":
             self.increase_speed()
         elif key == "a":
             self.decrease_speed()
         elif key == " ":
             self.publish_command()
+            self.get_logger().info("Stop")
 
 
 def read_key():
