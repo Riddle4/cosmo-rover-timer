@@ -9,7 +9,10 @@ setup(
     data_files=[
         ("share/ament_index/resource_index/packages", ["resource/" + package_name]),
         ("share/" + package_name, ["package.xml"]),
-        ("share/" + package_name + "/launch", ["launch/rover_timer.launch.py"]),
+        (
+            "share/" + package_name + "/launch",
+            ["launch/rover_timer.launch.py", "launch/drive_rover.launch.py"],
+        ),
         ("share/" + package_name + "/worlds", ["worlds/simple_track.sdf"]),
         (
             "share/" + package_name + "/models/cosmo_rover",

@@ -23,6 +23,7 @@ ros2_ws/
       cosmo_rover/
         timer_node.py
       launch/
+        drive_rover.launch.py
         rover_timer.launch.py
       models/
         cosmo_rover/
@@ -65,7 +66,13 @@ Elapsed time: 3 seconds
 
 ## Lancer le monde Gazebo
 
-Depuis le dossier `ros2_ws` :
+Option recommandee, via ROS 2 launch :
+
+```bash
+ros2 launch cosmo_rover drive_rover.launch.py
+```
+
+Option directe, depuis le dossier `ros2_ws` :
 
 ```bash
 gz sim src/cosmo_rover/worlds/simple_track.sdf
