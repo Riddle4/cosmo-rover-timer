@@ -11,6 +11,10 @@ setup(
         ("share/" + package_name, ["package.xml"]),
         ("share/" + package_name + "/launch", ["launch/rover_timer.launch.py"]),
         ("share/" + package_name + "/worlds", ["worlds/simple_track.sdf"]),
+        (
+            "share/" + package_name + "/models/cosmo_rover",
+            ["models/cosmo_rover/model.config", "models/cosmo_rover/model.sdf"],
+        ),
     ],
     install_requires=["setuptools"],
     zip_safe=True,

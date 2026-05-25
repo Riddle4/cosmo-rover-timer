@@ -10,6 +10,7 @@ Cette version contient uniquement :
 - un node timer qui affiche le temps ecoule toutes les secondes
 - un launch file pour demarrer le node
 - un monde Gazebo simple avec un sol plat, une piste rectangulaire et une ligne de depart
+- un modele Gazebo simple de rover a 4 roues
 
 Il n'y a pas encore de robot complexe ni de controleur de vitesse.
 
@@ -23,6 +24,10 @@ ros2_ws/
         timer_node.py
       launch/
         rover_timer.launch.py
+      models/
+        cosmo_rover/
+          model.config
+          model.sdf
       worlds/
         simple_track.sdf
       package.xml
@@ -66,4 +71,10 @@ Depuis le dossier `ros2_ws` :
 gz sim src/cosmo_rover/worlds/simple_track.sdf
 ```
 
-Le monde contient un sol plat, une piste rectangulaire simple et une ligne de depart visible.
+Le monde contient un sol plat, une piste rectangulaire simple, une ligne de depart visible et le rover place pres de cette ligne.
+
+Le modele du rover est dans :
+
+```text
+src/cosmo_rover/models/cosmo_rover/model.sdf
+```
